@@ -163,9 +163,11 @@ planForm.addEventListener("submit", async (e) => {
       throw new Error(json.error || "Unknown server error.");
     }
 
-   currentPlanData = { input: data, plan: json.asciiPlan };
+   const json = await res.json();
+
+currentPlanData = { input: data, plan: json };
 renderResults(data, json);
-    showResults();
+showResults();
 
   } catch (err) {
     console.error("Error generating plan:", err);
