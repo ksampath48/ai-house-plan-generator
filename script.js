@@ -252,7 +252,9 @@ function renderAllocationBars(allocation) {
 
 // ─── ASCII Floor Plan ──────────────────────────────────────────────────────────
 function renderAsciiPlan(ascii) {
-  asciiPlan.textContent = ascii || "Floor plan not available.";
+  asciiPlan.textContent = (ascii && ascii.trim() !== "") 
+  ? ascii 
+  : "Floor plan not available.";
 }
 
 // ─── Engineering Suggestions ───────────────────────────────────────────────────
