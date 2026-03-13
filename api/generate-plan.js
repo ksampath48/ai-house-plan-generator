@@ -4,10 +4,9 @@ export default function handler(req, res) {
 
   const plan = `
 Ground Floor
-- Living Room
-- Kitchen
-- Bedroom
-- Bathroom
+------------
+| Living Room | Kitchen |
+| Bedroom     | Bathroom|
 `;
 
   res.status(200).json({
