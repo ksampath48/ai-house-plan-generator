@@ -6,7 +6,7 @@ export default function handler(req, res) {
 Ground Floor
 ------------
 | Living Room | Kitchen |
-| Bedroom     | Bathroom|
+| Bedroom     | Bathroom |
 `;
 
   res.status(200).json({
