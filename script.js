@@ -180,7 +180,12 @@ function renderResults(input, plan) {
   renderPlotSummary(plan.plotSummary, input);
   renderRoomsTable(plan.rooms);
   renderAllocationBars(plan.spaceAllocation);
-  renderAsciiPlan(plan.asciiFloorPlan);
+  renderPlotSummary(plan.plotSummary, input);
+renderRoomsTable(plan.rooms);
+renderAllocationBars(plan.spaceAllocation);
+renderAsciiPlan(plan.asciiPlan);
+renderEngineeringSuggestions(plan.engineeringSuggestions, plan.structuralNotes);
+renderFloorPlanCanvas(plan.rooms, input);
   renderEngineeringSuggestions(plan.engineeringSuggestions, plan.structuralNotes);
   renderFloorPlanCanvas(plan.rooms, input);
 }
