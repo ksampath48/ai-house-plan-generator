@@ -29,7 +29,14 @@ First Floor
 
  res.status(200).json({
   success: true,
-  summary: "AI Generated House Plan",
+
+  plotSummary: {
+    plotSize: plotSize,
+    facing: facing,
+    bedrooms: bedrooms,
+    bathrooms: bathrooms,
+    floors: floors
+  },
 
   rooms: [
     { name: "Living Room", floor: "Ground", width: 18, height: 14, x: 40, y: 40 },
