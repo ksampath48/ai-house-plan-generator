@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI House Plan Generator</title>
+
+  <!-- Google Fonts: Playfair Display + DM Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- jsPDF for PDF export -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ══════════ GRID BACKGROUND ══════════ -->
+  <div class="grid-bg" aria-hidden="true"></div>
+
+  <!-- ══════════ HEADER ══════════ -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo-block">
+        <svg class="logo-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="2" y="10" width="36" height="28" rx="2" stroke="var(--amber)" stroke-width="2"/>
+          <path d="M2 18 L20 4 L38 18" stroke="var(--amber)" stroke-width="2" stroke-linejoin="round"/>
+          <rect x="14" y="24" width="12" height="14" stroke="var(--amber)" stroke-width="1.5"/>
+          <rect x="7" y="20" width="7" height="7" stroke="var(--amber)" stroke-width="1.5"/>
+          <rect x="26" y="20" width="7" height="7" stroke="var(--amber)" stroke-width="1.5"/>
+        </svg>
+        <div>
+          <h1 class="site-title">AI House Plan <span class="accent">Generator</span></h1>
+          <p class="site-tagline">Intelligent Architecture &bull; Automated Design &bull; Vastu Compliant</p>
+        </div>
+      </div>
+      <div class="header-badge">
+        <span class="badge-dot"></span>
+        <span>AI Powered</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ══════════ MAIN CONTENT ══════════ -->
+  <main class="main-container">
+
+    <!-- ── FORM SECTION ── -->
+    <section class="form-section card" id="formSection">
+      <div class="section-label">
+        <span class="label-num">01</span>
+        <span>Plot Configuration</span>
+      </div>
+      <h2 class="section-title">Enter Your Plot Details</h2>
+      <p class="section-desc">Fill in the parameters below and our AI architect will generate a complete residential floor plan instantly.</p>
+
+      <form id="planForm" novalidate>
+        <div class="form-grid">
+
+          <!-- Plot Size -->
+          <div class="field-group">
+            <label class="field-label" for="plotSize">
+              <svg viewBox="0 0 20 20" fill="none"><rect x="2" y="2" width="16" height="16" rx="1" stroke="currentColor" stroke-width="1.5"/><path d="M2 10h16M10 2v16" stroke="currentColor" stroke-width="1.5"/></svg>
+              Plot Size <em>(Square Yards)</em>
+            </label>
+            <input
+              class="field-input"
+              type="number"
+              id="plotSize"
+              name="plotSize"
+              placeholder="e.g. 150"
+              min="20"
+              max="2000"
+              required
+            />
+            <span class="field-hint">Enter the total plot area in square yards</span>
+          </div>
+
+          <!-- Facing Direction -->
+          <div class="field-group">
+            <label class="field-label" for="facingDirection">
+              <svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.5"/><path d="M10 2v4M10 14v4M2 10h4M14 10h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="10" cy="10" r="2" fill="currentColor"/></svg>
+              Facing Direction
+            </label>
+            <select class="field-input field-select" id="facingDirection" name="facingDirection" required>
+              <option value="" disabled selected>Select direction</option>
+              <option value="North">North</option>
+              <option value="South">South</option>
+              <option value="East">East</option>
+              <option value="West">West</option>
+              <option value="North-East">North-East</option>
+              <option value="North-West">North-West</option>
+              <option value="South-East">South-East</option>
+              <option value="South-West">South-West</option>
+            </select>
+          </div>
+
+          <!-- Number of Floors -->
+          <div class="field-group">
+            <label class="field-label" for="floors">
+              <svg viewBox="0 0 20 20" fill="none"><rect x="2" y="12" width="16" height="6" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="4" y="6" width="12" height="6" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="6" y="2" width="8" height="4" rx="1" stroke="currentColor" stroke-width="1.5"/></svg>
+              Number of Floors
+            </label>
+            <select class="field-input field-select" id="floors" name="floors" required>
+              <option value="" disabled selected>Select floors</option>
+              <option value="1">Ground Floor (G)</option>
+              <option value="2">G + 1 (2 Floors)</option>
+              <option value="3">G + 2 (3 Floors)</option>
+              <option value="4">G + 3 (4 Floors)</option>
+            </select>
+          </div>
+
+          <!-- Bedrooms -->
+          <div class="field-group">
+            <label class="field-label" for="bedrooms">
+              <svg viewBox="0 0 20 20" fill="none"><path d="M2 14V9a1 1 0 011-1h14a1 1 0 011 1v5" stroke="currentColor" stroke-width="1.5"/><path d="M2 14h16v2H2z" stroke="currentColor" stroke-width="1.5"/><rect x="5" y="9" width="4" height="3" rx="1" stroke="currentColor" stroke-width="1.2"/><rect x="11" y="9" width="4" height="3" rx="1" stroke="currentColor" stroke-width="1.2"/><path d="M2 9V7a3 3 0 013-3h10a3 3 0 013 3v2" stroke="currentColor" stroke-width="1.5"/></svg>
+              Bedrooms
+            </label>
+            <select class="field-input field-select" id="bedrooms" name="bedrooms" required>
+              <option value="" disabled selected>Select bedrooms</option>
+              <option value="1">1 Bedroom</option>
+              <option value="2">2 Bedrooms</option>
+              <option value="3">3 Bedrooms</option>
+              <option value="4">4 Bedrooms</option>
+              <option value="5">5 Bedrooms</option>
+              <option value="6">6 Bedrooms</option>
+            </select>
+          </div>
+
+          <!-- Bathrooms -->
+          <div class="field-group">
+            <label class="field-label" for="bathrooms">
+              <svg viewBox="0 0 20 20" fill="none"><path d="M4 10V5a2 2 0 012-2h1a2 2 0 012 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><rect x="2" y="10" width="16" height="4" rx="1" stroke="currentColor" stroke-width="1.5"/><path d="M5 14v3M15 14v3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              Bathrooms
+            </label>
+            <select class="field-input field-select" id="bathrooms" name="bathrooms" required>
+              <option value="" disabled selected>Select bathrooms</option>
+              <option value="1">1 Bathroom</option>
+              <option value="2">2 Bathrooms</option>
+              <option value="3">3 Bathrooms</option>
+              <option value="4">4 Bathrooms</option>
+              <option value="5">5 Bathrooms</option>
+            </select>
+          </div>
+
+          <!-- Parking -->
+          <div class="field-group">
+            <label class="field-label" for="parking">
+              <svg viewBox="0 0 20 20" fill="none"><rect x="2" y="6" width="16" height="11" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M5 17v1M15 17v1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="5.5" cy="14.5" r="1.5" stroke="currentColor" stroke-width="1.2"/><circle cx="14.5" cy="14.5" r="1.5" stroke="currentColor" stroke-width="1.2"/><path d="M2 10h16" stroke="currentColor" stroke-width="1.5"/><path d="M6 3l2-3h4l2 3" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+              Parking Required
+            </label>
+            <select class="field-input field-select" id="parking" name="parking" required>
+              <option value="" disabled selected>Select option</option>
+              <option value="Yes">Yes — Include Parking</option>
+              <option value="No">No — Skip Parking</option>
+            </select>
+          </div>
+
+          <!-- Kitchen Type -->
+          <div class="field-group">
+            <label class="field-label" for="kitchenType">
+              <svg viewBox="0 0 20 20" fill="none"><rect x="2" y="4" width="16" height="13" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M2 9h16" stroke="currentColor" stroke-width="1.5"/><circle cx="6" cy="6.5" r="1" fill="currentColor"/><circle cx="10" cy="6.5" r="1" fill="currentColor"/><circle cx="14" cy="6.5" r="1" fill="currentColor"/></svg>
+              Kitchen Type
+            </label>
+            <select class="field-input field-select" id="kitchenType" name="kitchenType" required>
+              <option value="" disabled selected>Select kitchen type</option>
+              <option value="Open">Open Kitchen (Modern)</option>
+              <option value="Closed">Closed Kitchen (Traditional)</option>
+            </select>
+          </div>
+
+          <!-- Vastu Preference -->
+          <div class="field-group">
+            <label class="field-label" for="vastu">
+              <svg viewBox="0 0 20 20" fill="none"><path d="M10 2l2.5 5 5.5.8-4 3.9.95 5.5L10 14.7l-4.95 2.5.95-5.5L2 7.8l5.5-.8z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+              Vastu Preference
+            </label>
+            <select class="field-input field-select" id="vastu" name="vastu" required>
+              <option value="" disabled selected>Select option</option>
+              <option value="Yes">Yes — Vastu Compliant</option>
+              <option value="No">No — Modern Layout</option>
+            </select>
+          </div>
+
+        </div><!-- /form-grid -->
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn-generate" id="generateBtn">
+          <span class="btn-icon">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+          </span>
+          <span class="btn-label">Generate Plan</span>
+          <span class="btn-arrow">→</span>
+        </button>
+
+        <!-- Error message -->
+        <div class="form-error" id="formError" aria-live="polite"></div>
+
+      </form>
+    </section>
+
+    <!-- ── LOADING STATE ── -->
+    <section class="loading-section" id="loadingSection" hidden>
+      <div class="loading-inner">
+        <div class="loading-blueprint">
+          <div class="blueprint-grid"></div>
+          <div class="blueprint-lines">
+            <div class="bp-line bp-line-1"></div>
+            <div class="bp-line bp-line-2"></div>
+            <div class="bp-line bp-line-3"></div>
+            <div class="bp-cross bp-cross-1"></div>
+            <div class="bp-cross bp-cross-2"></div>
+          </div>
+        </div>
+        <h3 class="loading-title">AI Architect at Work</h3>
+        <div class="loading-steps">
+          <p class="loading-step active" id="step1">📐 Analyzing plot dimensions...</p>
+          <p class="loading-step" id="step2">🏗️ Calculating room allocations...</p>
+          <p class="loading-step" id="step3">🧭 Applying Vastu principles...</p>
+          <p class="loading-step" id="step4">✏️ Drafting floor plan...</p>
+          <p class="loading-step" id="step5">✅ Finalizing engineering specs...</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════ RESULTS SECTION ══════════ -->
+    <section id="resultsSection" hidden>
+
+      <!-- ── PLOT SUMMARY ── -->
+      <div class="result-card card" id="plotSummaryCard">
+        <div class="section-label">
+          <span class="label-num">02</span>
+          <span>Plot Summary</span>
+        </div>
+        <h2 class="section-title">Plot Analysis</h2>
+        <div class="summary-grid" id="summaryGrid">
+          <!-- Filled by JS -->
+        </div>
+      </div>
+
+      <!-- ── ROOM DIMENSIONS ── -->
+      <div class="result-card card" id="roomDimensionsCard">
+        <div class="section-label">
+          <span class="label-num">03</span>
+          <span>Room Dimensions</span>
+        </div>
+        <h2 class="section-title">Room-by-Room Breakdown</h2>
+        <div class="table-wrap">
+          <table class="rooms-table" id="roomsTable">
+            <thead>
+              <tr>
+                <th>Room</th>
+                <th>Floor</th>
+                <th>Length × Width</th>
+                <th>Area (sq ft)</th>
+                <th>Position</th>
+                <th>Notes</th>
+              </tr>
+            </thead>
+            <tbody id="roomsTableBody">
+              <!-- Filled by JS -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Space Allocation -->
+        <h3 class="sub-title">Space Allocation</h3>
+        <div class="allocation-bars" id="allocationBars">
+          <!-- Filled by JS -->
+        </div>
+      </div>
+
+      <!-- ── ASCII FLOOR PLAN ── -->
+      <div class="result-card card" id="asciiCard">
+        <div class="section-label">
+          <span class="label-num">04</span>
+          <span>ASCII Floor Plan</span>
+        </div>
+        <h2 class="section-title">Ground Floor Layout</h2>
+        <pre class="ascii-plan" id="asciiPlan"><!-- Filled by JS --></pre>
+      </div>
+
+      <!-- ── VISUAL FLOOR PLAN (Canvas) ── -->
+      <div class="result-card card" id="visualPlanCard">
+        <div class="section-label">
+          <span class="label-num">05</span>
+          <span>Visual Floor Plan</span>
+        </div>
+        <h2 class="section-title">2D Floor Plan Diagram</h2>
+        <p class="section-desc">Generated from AI room data — interactive 2D layout</p>
+        <div class="canvas-wrap">
+          <canvas id="floorPlanCanvas"></canvas>
+        </div>
+      </div>
+
+      <!-- ── ENGINEERING SUGGESTIONS ── -->
+      <div class="result-card card" id="engineeringCard">
+        <div class="section-label">
+          <span class="label-num">06</span>
+          <span>Engineering Suggestions</span>
+        </div>
+        <h2 class="section-title">Structural &amp; Engineering Notes</h2>
+
+        <div class="suggestions-grid" id="suggestionsGrid">
+          <!-- Filled by JS -->
+        </div>
+
+        <!-- Structural Specs -->
+        <div class="structural-specs" id="structuralSpecs">
+          <!-- Filled by JS -->
+        </div>
+      </div>
+
+      <!-- ── DOWNLOAD BUTTONS ── -->
+      <div class="download-section card" id="downloadSection">
+        <div class="section-label">
+          <span class="label-num">07</span>
+          <span>Export</span>
+        </div>
+        <h2 class="section-title">Download Your Plan</h2>
+        <p class="section-desc">Export your complete AI-generated house plan in multiple formats.</p>
+        <div class="download-btns">
+          <button class="btn-download btn-pdf" id="downloadPdf">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6z" stroke="currentColor" stroke-width="2"/><path d="M14 2v6h6M9 12h6M9 15h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            Download Plan as PDF
+          </button>
+          <button class="btn-download btn-img" id="downloadImage">
+            <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" stroke-width="2"/><circle cx="8.5" cy="8.5" r="1.5" stroke="currentColor" stroke-width="2"/><path d="M21 15l-5-5L5 21" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+            Download Plan as Image
+          </button>
+          <button class="btn-download btn-reset" id="resetBtn">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M1 4v6h6M23 20v-6h-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M20.49 9A9 9 0 005.64 5.64L1 10M23 14l-4.64 4.36A9 9 0 013.51 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Generate New Plan
+          </button>
+        </div>
+      </div>
+
+    </section><!-- /resultsSection -->
+
+  </main>
+
+  <!-- ══════════ FOOTER ══════════ -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p>AI House Plan Generator &bull; Internal Prototype &bull; Powered by OpenAI GPT-4o</p>
+      <p class="footer-note">Plans are AI-generated. Always consult a licensed architect for construction.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
