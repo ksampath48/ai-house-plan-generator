@@ -163,7 +163,7 @@ planForm.addEventListener("submit", async (e) => {
       throw new Error(json.error || "Unknown server error.");
     }
 
-   const json = await res.json();
+  
 
 currentPlanData = { input: data, plan: json };
 renderResults(data, json);
