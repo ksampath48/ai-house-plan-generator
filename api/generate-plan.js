@@ -27,9 +27,21 @@ First Floor
 - Balcony
 `;
 
-  res.status(200).json({
-    success: true,
-    plan: plan
-  });
+ res.status(200).json({
+  success: true,
+  summary: "AI Generated House Plan",
+
+  rooms: [
+    { name: "Living Room", floor: "Ground", width: 18, height: 14, x: 40, y: 40 },
+    { name: "Kitchen", floor: "Ground", width: 12, height: 10, x: 240, y: 40 },
+    { name: "Bedroom 1", floor: "Ground", width: 14, height: 12, x: 40, y: 200 },
+    { name: "Bedroom 2", floor: "Ground", width: 14, height: 12, x: 200, y: 200 },
+    { name: "Bathroom", floor: "Ground", width: 8, height: 6, x: 360, y: 200 }
+  ],
+
+  asciiPlan: plan,
+
+  notes: "AI structural suggestions"
+});
 
 }
