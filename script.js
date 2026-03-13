@@ -151,7 +151,7 @@ planForm.addEventListener("submit", async (e) => {
   showLoading();
 
   try {
-    const res = await fetch("/generate-plan", {
+    const res = await fetch("/api/generate-plan", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
