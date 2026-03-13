@@ -163,8 +163,8 @@ planForm.addEventListener("submit", async (e) => {
       throw new Error(json.error || "Unknown server error.");
     }
 
-    currentPlanData = { input: data, plan: json.plan };
-    renderResults(data, json.plan);
+   currentPlanData = { input: data, plan: json.asciiPlan };
+renderResults(data, json);
     showResults();
 
   } catch (err) {
