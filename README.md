@@ -1,6 +1,6 @@
 # 🏠 AI House Plan Generator
 
-An AI-powered residential house plan generator that automatically creates complete floor plans based on plot details — no human architect required.
+An AI-powered residential house plan generator that creates conceptual floor plans, room dimensions, and engineering notes from plot details.
 
 **Tech Stack:** Node.js · Express · OpenAI GPT-4o · HTML Canvas · jsPDF · Vanilla JS
 
@@ -51,7 +51,7 @@ ai-house-plan/
 
 | Feature | Description |
 |---|---|
-| **AI Floor Plan** | GPT-4o generates room dimensions, positions, Vastu notes |
+| **AI Floor Plan** | Generates room dimensions, zoning, Vastu notes |
 | **Canvas Rendering** | 2D visual floor plan drawn with HTML5 Canvas |
 | **PDF Export** | Full multi-page PDF with all plan details via jsPDF |
 | **Image Export** | Download floor plan as PNG image |
