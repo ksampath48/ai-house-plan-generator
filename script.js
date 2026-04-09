@@ -104,7 +104,10 @@ function resetToForm() {
 
 // ─── Form Validation ───────────────────────────────────────────────────────────
 function validateForm(data) {
-  const fields = ["plotSize", "facingDirection", "floors", "bedrooms", "bathrooms", "parking", "kitchenType", "vastu"];
+  const fields = [
+    "plotSize", "facingDirection", "floors", "bedrooms", "bathrooms",
+    "parking", "kitchenType", "vastu",
+  ];
   let valid = true;
 
   // Remove previous error states
@@ -180,12 +183,7 @@ function renderResults(input, plan) {
   renderPlotSummary(plan.plotSummary, input);
   renderRoomsTable(plan.rooms);
   renderAllocationBars(plan.spaceAllocation);
-  renderPlotSummary(plan.plotSummary, input);
-renderRoomsTable(plan.rooms);
-renderAllocationBars(plan.spaceAllocation);
-renderAsciiPlan(plan.asciiPlan);
-renderEngineeringSuggestions(plan.engineeringSuggestions, plan.structuralNotes);
-renderFloorPlanCanvas(plan.rooms, input);
+  renderAsciiPlan(plan.asciiPlan);
   renderEngineeringSuggestions(plan.engineeringSuggestions, plan.structuralNotes);
   renderFloorPlanCanvas(plan.rooms, input);
 }
