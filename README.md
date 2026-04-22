@@ -2,7 +2,7 @@
 
 An AI-powered residential house plan generator that creates conceptual floor plans, room dimensions, and engineering notes from plot details.
 
-**Tech Stack:** Node.js · Express · OpenAI GPT-4o · HTML Canvas · jsPDF · Vanilla JS
+**Tech Stack:** Node.js · Serverless API-compatible backend · HTML Canvas · jsPDF · Vanilla JS
 
 ---
 
@@ -13,18 +13,11 @@ An AI-powered residential house plan generator that creates conceptual floor pla
 npm install
 ```
 
-### 2. Configure OpenAI API Key
+### 2. Start the App
 ```bash
-cp .env.example .env
+npm start
 ```
-Open `.env` and replace `sk-your-openai-api-key-here` with your actual key from [platform.openai.com/api-keys](https://platform.openai.com/api-keys).
-
-### 3. Start the Server
-```bash
-node server.js
-```
-
-### 4. Open in Browser
+### 3. Open in Browser
 ```
 http://localhost:3000
 ```
@@ -35,13 +28,13 @@ http://localhost:3000
 
 ```
 ai-house-plan/
-├── public/
-│   ├── index.html       ← Frontend UI (form + results)
-│   ├── style.css        ← Blueprint-themed dark UI
-│   └── script.js        ← Canvas renderer, PDF export, API calls
-├── server.js            ← Express backend + OpenAI integration
+├── index.html           ← Frontend UI (form + results)
+├── style.css            ← Blueprint-themed dark UI
+├── script.js            ← Canvas renderer, PDF export, API calls
+├── server.js            ← Node backend serving static files + API
+├── api/generate-plan.js ← Serverless function handler (Vercel-compatible)
+├── lib/generatePlan.js  ← Shared planning engine used by both backends
 ├── package.json
-├── .env.example
 └── README.md
 ```
 
@@ -78,19 +71,16 @@ ai-house-plan/
 ## ⚠️ Notes
 
 - Plans are AI-generated for **prototyping only**. Always consult a licensed architect for actual construction.
-- Requires a valid OpenAI API key with GPT-4o access.
-- The server uses GPT-4o which may incur API costs (~$0.01–0.05 per generation).
+- This build currently uses a deterministic planning engine for offline/local usage.
+- If you later plug in an LLM provider, keep architectural review in the loop before construction.
 
 ---
 
 ## 🔧 Development
 
 ```bash
-# Install nodemon for hot reload
-npm install -D nodemon
-
-# Run in dev mode
-npm run dev
+# Type/syntax checks
+npm run check
 ```
 
 ---
